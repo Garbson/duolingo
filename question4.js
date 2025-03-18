@@ -5,8 +5,12 @@ const Question4 = {
     <div class="content">
       <!-- Progress Bar -->
       <div class="d-flex justify-content-between align-items-center mb-3 w-100">
-        <div class="progress" style="width: 90%">
-          <div class="progress-bar" role="progressbar" :style="{ width: (current) / total * 100 + '%' }"></div>
+        <div class="progress">
+          <div 
+            class="progress-bar" 
+            role="progressbar" 
+            :style="{ width: (current / total) * 100 + '%' }" 
+          ></div>
         </div>
         <!-- Skip Button -->
         <button class="btn btn-skip" @click="nextQuestion">Skip</button>
@@ -29,16 +33,14 @@ const Question4 = {
       </div>
 
       <!-- Verify Button -->
-      <div class="fixed-bottom py-3" v-if="!answerChecked">
-        <div class="container px-4">
+      <div class="fixed-bottom py-3 d-flex justify-content-center " v-if="!answerChecked"> 
           <button 
             class="btn btn-verify w-100" 
             :disabled="selectedImage === null" 
             @click="checkAnswer"
           >
             Verify Answer
-          </button>
-        </div>
+          </button>    
       </div>
 
       <!-- Feedback Dialog -->
@@ -54,8 +56,8 @@ const Question4 = {
   `,
   data() {
     return {
-      current: 4,  
-      total: 5,    
+      current: 4,  // Atualizado com o número da pergunta
+      total: 5,    // Total de perguntas
       selectedImage: null,
       answerChecked: false,
       feedbackMessage: "",
@@ -96,8 +98,8 @@ const Question4 = {
       this.feedbackClass = "";
       this.current++;
 
-      const nextQuestion = `question${this.current}.html`; // Update the question number for the next one
-      window.location.href = nextQuestion;  // Redirect to the next question
+      const nextQuestion = `question${this.current}.html`; // Atualizando para a próxima pergunta
+      window.location.href = nextQuestion;  // Redirecionando para a próxima página
     },
     skip() {
       alert("You skipped this question!");

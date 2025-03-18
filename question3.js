@@ -5,7 +5,7 @@ const Question3 = {
     <div class="content">
       <!-- Progress Bar -->
       <div class="d-flex justify-content-between align-items-center mb-3 w-100">
-        <div class="progress" style="width: 80%">
+        <div class="progress">
           <div class="progress-bar" role="progressbar" :style="{ width: (current) / total * 100 + '%' }"></div>
         </div>
         <!-- Skip Button -->
@@ -41,16 +41,14 @@ const Question3 = {
       </div>
 
       <!-- Verify Button -->
-      <div class="fixed-bottom py-3" v-if="!answerChecked">
-        <div class="container px-4">
+      <div class="fixed-bottom py-3  d-flex justify-content-center " v-if="!answerChecked">    
           <button 
             class="btn btn-verify w-100" 
             :disabled="selectedWords.length === 0" 
             @click="checkAnswer"
           >
             Verify Answer
-          </button>
-        </div>
+          </button>   
       </div>
 
       <!-- Feedback Dialog -->

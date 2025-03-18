@@ -31,16 +31,14 @@ const Question1 = {
       </div>
 
       <!-- Verify Button -->
-      <div class="fixed-bottom py-3" v-if="!answerChecked">
-        <div class="container px-4">
+          <div class="fixed-bottom py-3  d-flex justify-content-center " v-if="!answerChecked">
           <button 
-            class="btn btn-verify w-100" 
+            class="btn btn-verify" 
             :disabled="selectedOption === null" 
             @click="checkAnswer"
           >
             Verify Answer
           </button>
-        </div>
       </div>
 
       <!-- Feedback Dialog -->
