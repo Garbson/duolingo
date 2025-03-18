@@ -128,3 +128,19 @@ body {
 .list-group-item+.list-group-item {
   border-top-width: 1px;
 }
+
+@media (max-width: 900px) {
+  .content {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .btn-skip {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+  }
+
+  .progress {
+    width: 100%;
+  }
+}

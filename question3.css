@@ -109,6 +109,58 @@ body {
   background-color: #0056b3;
 }
 
+.btn-verify {
+  background-color: #0f7e0d;
+  border: none;
+  color: white;
+}
+
+.btn-verify:hover {
+  background-color: #0067d6;
+}
+
 .list-group-item+.list-group-item {
   border-top-width: 1px;
+}
+
+.word-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.list-group-item {
+  background-color: #2d2d2d;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  min-width: 80px;
+}
+
+.list-group-item.selected {
+  background-color: #28a745;
+  color: white;
+}
+
+.list-group-item:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+@media (max-width: 900px) {
+  .content {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .btn-skip {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+  }
+
+  .progress {
+    width: 100%;
+  }
 }

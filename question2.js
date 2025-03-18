@@ -9,7 +9,7 @@ const Question2 = {
           <div class="progress-bar" role="progressbar" :style="{ width: (current) / total * 100 + '%' }"></div>
         </div>
         <!-- Skip Button -->
-        <button class="btn btn-skip" @click="skip">Skip</button>
+        <button class="btn btn-skip" @click="nextQuestion">Skip</button>
       </div>
 
       <!-- Question -->
@@ -56,8 +56,8 @@ const Question2 = {
   `,
   data() {
     return {
-      current: 2,  // Atualizado com o número da pergunta
-      total: 5,    // Total de perguntas
+      current: 2,  
+      total: 5,    
       selectedOption: null,
       answerChecked: false,
       feedbackMessage: "",
@@ -87,13 +87,12 @@ const Question2 = {
       }
     },
     nextQuestion() {
-      // Avançar para a próxima pergunta
       this.answerChecked = false;
       this.selectedOption = null;
       this.feedbackMessage = "";
       this.feedbackClass = "";
-      this.current++;
-      this.currentQuestion.question = "The house is __."; // Resetando a pergunta
+
+      window.location.href = 'question3.html';  
     },
     skip() {
       alert("You skipped this question!");

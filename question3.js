@@ -9,7 +9,7 @@ const Question3 = {
           <div class="progress-bar" role="progressbar" :style="{ width: (current) / total * 100 + '%' }"></div>
         </div>
         <!-- Skip Button -->
-        <button class="btn btn-skip" @click="skip">Skip</button>
+        <button class="btn btn-skip" @click="nextQuestion">Skip</button>
       </div>
 
       <!-- Question -->
@@ -18,8 +18,8 @@ const Question3 = {
       <!-- Sentence Construction -->
       <div class="d-flex justify-content-center w-100 mb-4">
         <div class="bg-dark text-white rounded p-3 w-100 text-center">
-          <span v-for="(word, index) in selectedWords" :key="index">
-            {{ word }} 
+          <span v-for="(word, index) in selectedWords" :key="index" class="me-2">
+            {{ word }}
           </span>
           <span v-if="selectedWords.length === 0" class="text-secondary">Click words to build your sentence</span>
         </div>
@@ -66,23 +66,27 @@ const Question3 = {
   `,
   data() {
     return {
-      current: 3,  // Atualizado com o número da pergunta
-      total: 5,    // Total de perguntas
+      current: 3,  
+      total: 5,   
       selectedWords: [],
       answerChecked: false,
       feedbackMessage: "",
       feedbackClass: "",
       currentQuestion: {
-        question: "I ____ a book.",
-        correctAnswer: ["have", "a", "book"],
+        question: "", 
+        correctAnswer: ["I", "am", "learning", "Vue", "3"], 
       },
-      wordsBank: ["I", "have", "a", "book", "read", "seen"],
+      wordsBank: ["I", "am", "learning", "Vue", "3", "JavaScript", "is", "fun"], 
     };
   },
   methods: {
     selectWord(word) {
       if (!this.selectedWords.includes(word)) {
         this.selectedWords.push(word);
+      }
+      if (this.selectedWords.length > 0) {
+        // Enable Verify Answer button when the first word is selected
+        this.enableVerifyButton = true;
       }
     },
     checkAnswer() {
@@ -99,12 +103,16 @@ const Question3 = {
       }
     },
     nextQuestion() {
-      // Reset for next question
+      // Reset para a próxima questão
       this.answerChecked = false;
       this.selectedWords = [];
       this.feedbackMessage = "";
       this.feedbackClass = "";
       this.current++;
+
+      // Agora a próxima questão será corretamente a atual + 1
+      const nextQuestion = `question${this.current}.html`; // Avançando corretamente
+      window.location.href = nextQuestion; // Redireciona para a próxima página
     },
     skip() {
       alert("You skipped this question!");
