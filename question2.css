@@ -1,0 +1,130 @@
+body {
+  background-color: rgb(24, 22, 22);
+  color: rgb(255, 255, 255);
+  margin: 0;
+  height: 100vh;
+}
+
+.content {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.progress-bar {
+  transition: width 0.5s;
+}
+
+.list-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+
+.list-group-item {
+  background-color: #2d2d2d;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+}
+
+.list-group-item:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.list-group-item.selected {
+  background-color: #28a745;
+  color: white;
+}
+
+.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.btn-verify:disabled {
+  background-color: #555;
+  /* Cor mais clara quando desabilitado */
+  color: #aaa;
+  /* Cor do texto mais clara */
+  cursor: not-allowed;
+  /* Indicativo visual que o botão está desabilitado */
+}
+
+.progress {
+  width: 100%;
+  margin: 0 auto;
+  background-color: #f3f3f3;
+}
+
+.progress-bar {
+  background-color: #007bff;
+}
+
+.btn-skip {
+  background-color: #f3f3f3;
+  color: #121212;
+}
+
+.btn-skip:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Style for feedback dialog */
+.feedback-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 16px 16px 0 0;
+  padding: 15px;
+  background-color: #2d2d2d;
+  text-align: center;
+  color: white;
+}
+
+.feedback-message {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.feedback-footer button {
+  width: 100%;
+  background-color: #007bff;
+  border: none;
+  padding: 10px;
+  font-size: 1rem;
+  color: white;
+}
+
+.feedback-footer button:hover {
+  background-color: #0056b3;
+}
+
+.btn-verify {
+  background-color: #0f7e0d;
+  border: none;
+  color: white;
+}
+
+.btn-verify:hover {
+  background-color: #0067d6;
+}
+
+
+.list-group-item+.list-group-item {
+  border-top-width: 1px;
+}
