@@ -3,16 +3,14 @@ const { createApp, ref } = Vue;
 const Question5 = {
   template: `
     <div class="content">
-      <!-- Barra de progresso e botão de skip -->
+      <!-- Barra de Progresso -->
       <div class="d-flex justify-content-between align-items-center mb-3 w-100">
-        <div class="progress" style="width: 100%">
-          <div class="progress-bar" role="progressbar" :style="{ width: (current) / total * 100 + '%' }"></div>
+        <div class="progress w-100">
+          <div class="progress-bar" role="progressbar" :style="{ width: (current + 1) / total * 100 + '%' }"></div>
         </div>
-        <button class="btn btn-skip" @click="skip">Skip</button>
       </div>
 
-      <!-- Enunciado da questão -->
-      <h4 class="fw-semibold fs-5 mb-4 text-start w-100">Complete the pairs by matching the words correctly</h4>
+      <h4 class="fw-semibold fs-5 mb-4 text-start w-100">Complete the pairs by matching the words correctly (always select from left to right)</h4>
 
       <!-- Colunas de palavras -->
       <div class="pairing-container">
@@ -21,14 +19,9 @@ const Question5 = {
             v-for="(word, index) in portugueseWords" 
             :key="'l-' + index"
             class="pairing-item"
-            :class="{
-              'selected': selectedLeft === index, 
-              'correct': isCorrect(index, 'left'),
-              'incorrect': isIncorrect(index, 'left'),
-              'disabled': isWordMatched(index, 'left')
-            }"
+            :class="{ 'disabled': isWordMatched(index, 'left'), 'correct': isCorrect(index, 'left'), 'incorrect': isIncorrect(index, 'left') }"
             @click="selectWord('left', index)"
-            v-if="!isWordMatched(index, 'left')"
+            :disabled="isWordMatched(index, 'left')"  
           >
             {{ word }}
           </div>
@@ -39,14 +32,9 @@ const Question5 = {
             v-for="(word, index) in englishWords" 
             :key="'r-' + index"
             class="pairing-item"
-            :class="{
-              'selected': selectedRight === index, 
-              'correct': isCorrect(index, 'right'),
-              'incorrect': isIncorrect(index, 'right'),
-              'disabled': isWordMatched(index, 'right')
-            }"
+            :class="{ 'disabled': isWordMatched(index, 'right'), 'correct': isCorrect(index, 'right'), 'incorrect': isIncorrect(index, 'right') }"
             @click="selectWord('right', index)"
-            v-if="!isWordMatched(index, 'right')"
+            :disabled="isWordMatched(index, 'right')"  
           >
             {{ word }}
           </div>
@@ -66,15 +54,16 @@ const Question5 = {
   `,
   data() {
     return {
-      current: 5, 
-      total: 5,    
+      current: 4,  // Define a questão como a 5
+      total: 5,    // Total de perguntas
       selectedLeft: null,
       selectedRight: null,
-      answerChecked: false,
       feedbackMessage: "",
       feedbackClass: "",
       portugueseWords: ["Casa", "Cachorro", "Rua", "Carro", "Livro"],
       englishWords: ["House", "Dog", "Street", "Car", "Book"],
+      matchedPairs: [], 
+      incorrectPairs: [], 
       correctPairs: [
         { left: 0, right: 0 },
         { left: 1, right: 1 },
@@ -82,27 +71,19 @@ const Question5 = {
         { left: 3, right: 3 },
         { left: 4, right: 4 }
       ],
-      matchedPairs: [], 
-      incorrectPairs: [], 
     };
   },
   methods: {
     selectWord(side, index) {
-      if (this.selectedLeft !== null && this.selectedRight !== null) return;
-
-      // Seleção da palavra esquerda
-      if (side === 'left' && this.selectedLeft === null) {
+      if (side === 'left') {
         this.selectedLeft = index;
       } 
-
-      // Seleção da palavra direita e verificar a combinação
-      if (side === 'right' && this.selectedRight === null) {
+      if (side === 'right') {
         this.selectedRight = index;
-        this.checkPair(); 
+        this.checkPair();
       }
     },
 
-    // Verificar se a palavra já foi combinada
     isWordMatched(index, side) {
       if (side === 'left') {
         return this.matchedPairs.some(pair => pair.left === index);
@@ -111,7 +92,6 @@ const Question5 = {
       }
     },
 
-    // Verificar se a palavra é correta
     isCorrect(index, side) {
       if (side === 'left') {
         return this.matchedPairs.some(pair => pair.left === index && pair.right === this.selectedRight);
@@ -120,7 +100,6 @@ const Question5 = {
       }
     },
 
-    // Verificar se a palavra é incorreta
     isIncorrect(index, side) {
       if (side === 'left') {
         return this.incorrectPairs.some(pair => pair.left === index && pair.right === this.selectedRight);
@@ -129,27 +108,32 @@ const Question5 = {
       }
     },
 
-    // Verificação da combinação
     checkPair() {
+
       if (this.selectedLeft !== null && this.selectedRight !== null) {
-        const leftIdx = this.selectedLeft;
-        const rightIdx = this.selectedRight;
-        const leftWord = this.portugueseWords[leftIdx];
-        const rightWord = this.englishWords[rightIdx];
-        const isMatch = this.correctPairs.some(
-          (pair) => pair.left === leftWord && pair.right === rightWord
+        const leftIndex = this.selectedLeft;
+        const rightIndex = this.selectedRight;
+
+
+        const correctPair = this.correctPairs.some(pair => 
+          (pair.left === leftIndex && pair.right === rightIndex) || 
+          (pair.left === rightIndex && pair.right === leftIndex)
         );
 
-        if (isMatch) {
-          this.matchedPairs.push({ left: leftIdx, right: rightIdx });
+        if (correctPair) {
+       
+          this.matchedPairs.push({ left: leftIndex, right: rightIndex });
           this.selectedLeft = null;
           this.selectedRight = null;
           this.feedbackMessage = "Correct!";
           this.feedbackClass = "text-success";
         } else {
-          this.incorrectPairs.push({ left: leftIdx, right: rightIdx });
+         
+          this.incorrectPairs.push({ left: leftIndex, right: rightIndex });
           this.feedbackMessage = "Incorrect! Try again.";
           this.feedbackClass = "text-danger";
+
+         
           setTimeout(() => {
             this.selectedLeft = null;
             this.selectedRight = null;
@@ -158,27 +142,16 @@ const Question5 = {
       }
     },
 
-    // Função para avançar para a próxima questão
     nextQuestion() {
       if (this.matchedPairs.length === this.correctPairs.length) {
         this.feedbackMessage = "All pairs matched! Well done!";
         this.feedbackClass = "text-success";
       }
-      this.answerChecked = false;
-      this.selectedLeft = null;
-      this.selectedRight = null;
-      this.feedbackMessage = "";
-      this.feedbackClass = "";
 
-      if (this.matchedPairs.length === this.correctPairs.length) {
-        setTimeout(() => {
-          const nextQuestion = `question${this.current + 1}.html`;
-          window.location.href = nextQuestion;
-        }, 1000);
-      }
+      const nextQuestion = `question${this.current + 1}.html`; 
+      window.location.href = nextQuestion;
     },
-
-    // Função de skip
+    
     skip() {
       alert("You skipped this question!");
     }

@@ -34,8 +34,7 @@ body {
   padding: 10px;
   text-align: center;
   margin-bottom: 10px;
-  opacity: 1;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .pairing-item:hover {
@@ -48,11 +47,15 @@ body {
   color: white;
 }
 
+.pairing-item.disabled {
+  background-color: #555;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .pairing-item.correct {
   background-color: #28a745;
   color: white;
-  opacity: 0.5;
-  pointer-events: none;
 }
 
 .pairing-item.incorrect {
@@ -60,18 +63,7 @@ body {
   color: white;
 }
 
-.fixed-bottom {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-}
-
-.btn-verify:disabled {
-  background-color: #555;
-  color: #aaa;
-  cursor: not-allowed;
-}
-
+/* Barra de progresso */
 .progress {
   width: 100%;
   background-color: #f3f3f3;
@@ -81,15 +73,7 @@ body {
   background-color: #007bff;
 }
 
-.btn-skip {
-  background-color: #f3f3f3;
-  color: #121212;
-  margin-left: 10px;
-  font-size: 0.8rem;
-  border-radius: 24px;
-  padding: 0px 10px;
-}
-
+/* Feedback Footer */
 .feedback-footer {
   position: fixed;
   bottom: 0;
@@ -121,15 +105,4 @@ body {
 
 .feedback-footer button:hover {
   background-color: #0056b3;
-}
-
-@media (max-width: 900px) {
-  .content {
-    width: 90%;
-    padding: 10px;
-  }
-
-  .btn-skip {
-    font-size: 0.8rem;
-  }
 }
